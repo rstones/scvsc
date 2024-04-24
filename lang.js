@@ -23,6 +23,8 @@ async function initStatusBar() {
 async function startSCLang() {
   const configuration = vscode.workspace.getConfiguration();
   const scLangPath = configuration.get('supercollider.sclang.cmd');
+  const confFile = configuration.get('supercollider.sclang.sclang_conf');
+
   if (lang) {
     postWindow.appendLine('there is already an instance of sclang running.');
     return;
@@ -31,6 +33,8 @@ async function startSCLang() {
   try {
     lang = new Lang({
       sclang: scLangPath || getDefaultSCLangExecutable(),
+      sclang_conf: confFile || undefined,
+      failIfSclangConfIsMissing: confFile ? true : false,
     });
 
     lang.on('stdout', (message) => {
@@ -49,6 +53,7 @@ async function startSCLang() {
     statusBar.text = SCLANG_STATUS_BAR_ON;
     statusBar.show();
   } catch (err) {
+    lang = null;
     postWindow.appendLine(err);
     console.log(err);
   }

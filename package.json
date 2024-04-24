@@ -31,6 +31,14 @@
             ],
             "default": null,
             "description": "Specifies the correct sclang command for your SuperCollider installation."
+          },
+          "supercollider.sclang.sclang_conf": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null,
+            "description": "Specifies the sclang_conf.yaml file to use on sclang start."
           }
         }
       },
